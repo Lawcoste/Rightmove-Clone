@@ -9,7 +9,7 @@ import sys
 app = Flask(__name__)
 
 client = pymongo.MongoClient(
-    f"mongodb+srv://maki:86XjLNNB2zVfm8tS@cluster0.7eij7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    f"mongodb+srv://maki:@cluster0.7eij7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     server_api=ServerApi('1'))
 db = client['maki']
 cred = db["credentials"]
@@ -150,9 +150,9 @@ def get_consultants():
     if args.get("name"):
         query.update({"name": {"$regex": args.get("name"), "$options": "i"}})
     query.update({"role": "consultant"})
-    
+
     return jsonify(consultants=list(cred.find(query, {"_id": 0,"password": 0})))
-    
+
 
 
 @app.route('/delcon', methods=['OPTIONS', 'GET'])
@@ -201,7 +201,7 @@ def change_consent():
         return response
 
     args = request.args
-    
+
 
     query = {}
 
@@ -217,8 +217,8 @@ def change_consent():
         response = jsonify({"success": True})
     return response
 
-    
-    
+
+
 
 
 
